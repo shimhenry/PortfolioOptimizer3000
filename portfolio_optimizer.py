@@ -68,10 +68,10 @@ def create_output_df(tickers, cleaned_weights, dollar_weights, share_weights):
     return output
 
 
-def optimize_portfolio(tickers, risk_tolerance, principal, risk_free_rate, gamma=0):
+def optimize_portfolio(tickers, risk_tolerance, principal, risk_free_rate, gamma=0,start_date="2001-01-01"):
     end_date = datetime.today().strftime('%Y-%m-%d')
-    valid_tickers, failed_tickers = download_data(tickers, "2010-01-01", end_date)
-    data = yf.download(valid_tickers, start="2020-01-01", end=end_date)['Adj Close']
+    valid_tickers, failed_tickers = download_data(tickers, start_date, end_date)
+    data = yf.download(valid_tickers, start_date, end=end_date)['Adj Close']
     if not isinstance(data, pd.DataFrame):
         data = pd.DataFrame(data)
     mu = expected_returns.mean_historical_return(data)

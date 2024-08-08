@@ -26,24 +26,56 @@
         h1 {
             margin-bottom: 30px;
         }
+        .description-box {
+            background-color: #a5d7ff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1 class="text-center">Portfolio Optimizer</h1>
-        <form action="/optimize/5" method="post" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="excel_file">Upload Excel File:</label>
-                <input type="file" class="form-control-file" id="excel_file" name="excel_file" accept=".xlsx" required>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Welcome to Portfolio Optimizer <en>3000!</en></h1>
+        <a href="/static/Blank_Template.xlsx" class="btn btn-secondary btn-block mb-4" download><i class="fas fa-download"></i> Download Blank Template</a>
+        <form id="optimizeForm" action="/optimize" method="post" enctype="multipart/form-data">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="gamma">Gamma Value: <span id="gammaValue">1</span></label>
+                    <input type="range" class="form-control-range" id="gamma" name="gamma" min="0" max="20" step="1" value="1" oninput="updateGammaValue()" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="start_date">Historic Returns Start Date: </label>
+                    <input type="date" class="form-control" id="start_date" name="start_date" value="2000-01-01" required>
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary btn-block">Optimize</button>
+            <div class="description-box">
+                <p><em>Gamma</em> is a parameter that reduces the frequency of low or zero weight assets; defined by <a href="https://pyportfolioopt.readthedocs.io/en/latest/MeanVariance.html#id1" target="_blank">Robert Martin</a> as a "<em>small weights penalty</em>".
+                A <em>Gamma</em> of one is appropriate for a portfolio of roughly 20 assets.</p>
+            </div>
+            <div class="form-row justify-content-center">
+                <div class="form-group col-md-6 text-center">
+                    <label for="excel_file">Upload Completed Portfolio Template:</label>
+                    <input type="file" class="form-control-file" id="excel_file" name="excel_file" accept=".xlsx" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-calculator"></i> Optimize</button>
         </form>
-        <br>
-        <a href="/static/Blank_Template.xlsx" class="btn btn-secondary btn-block" download>Download Blank Template</a>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 Portfolio Optimizer 3000. All rights reserved.</p>
     </div>
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+    <script>
+        function updateGammaValue() {
+            var gamma = document.getElementById('gamma').value;
+            document.getElementById('gammaValue').innerText = gamma;
+        }
+    
+        document.getElementById('gamma').addEventListener('input', updateGammaValue);
+    </script>
+    </body>
+    </html>
