@@ -31,13 +31,15 @@
 <body>
     <div class="container">
         <h1 class="text-center">Portfolio Optimizer</h1>
-        <form action="/optimize" method="post" enctype="multipart/form-data">
+        <form action="/optimize/5" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="excel_file">Upload Excel File:</label>
                 <input type="file" class="form-control-file" id="excel_file" name="excel_file" accept=".xlsx" required>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Optimize</button>
         </form>
+        <br>
+        <a href="/static/Blank_Template.xlsx" class="btn btn-secondary btn-block" download>Download Blank Template</a>
     </div>
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

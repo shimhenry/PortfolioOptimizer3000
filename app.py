@@ -8,8 +8,9 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/optimize', methods=['POST'])
-def optimize():
+@app.route('/optimize/<gamma>', methods=['POST'])
+def optimize(gamma):
+    print(gamma)
     if 'excel_file' not in request.files:
         return "No file part", 400
     file = request.files['excel_file']
@@ -29,7 +30,8 @@ def optimize():
         risk_tolerance = input_df['Risk_Tolerance'].dropna().iloc[0]
         principal = input_df['Principal(USD)'].dropna().iloc[0]
         risk_free_rate = input_df['RF Rate'].dropna().iloc[0]
-        gamma = float(request.form.get('gamma', 0))
+        gamma = float(gamma)
+        print(gamma)
 
         output_risk_aware, output_max_sharpe, performance_metrics_risk_aware, performance_metrics_max_sharpe = optimize_portfolio(
             tickers, risk_tolerance, principal, risk_free_rate, gamma)
