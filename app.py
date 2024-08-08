@@ -8,9 +8,13 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/optimize/<gamma>', methods=['POST'])
-def optimize(gamma):
-    print(gamma)
+@app.route('/optimize', methods=['POST'])
+def optimize():
+    gamma = request.form.get('gamma', default=1, type=float)
+    start_date = request.form.get('start_date', default='2001-01-01')
+    print(f"Received gamma: {gamma}")  # Print statement to check gamma
+    print(f"Received returns start_date: {start_date}")  # Print statement to check start_date
+   
     if 'excel_file' not in request.files:
         return "No file part", 400
     file = request.files['excel_file']
